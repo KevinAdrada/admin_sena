@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
 {
+
+    protected $fillable = [
+        'name',
+        'email',
+        'area_id',
+        'training_center_id'
+    ];
+
+
     use HasFactory;
     public function training_center(){
         return $this->belongsTo('App\Models\Training_center');

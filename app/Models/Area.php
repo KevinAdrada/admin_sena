@@ -9,6 +9,11 @@ class Area extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name'
+    ];
+
+
     public function courses(){
         return $this->hasMany('App\Models\Course');
     }
@@ -16,4 +21,6 @@ class Area extends Model
     public function teachers(){
         return $this->hasMany('App\Models\Teacher');
     }
+
+
 }
