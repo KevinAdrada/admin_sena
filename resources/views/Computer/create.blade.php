@@ -1,26 +1,53 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="{{route('computer.store')}}" method="POST" enctype="multipart/form-data">
+@extends('layouts.app')
+@section('content')
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5">
+            
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-light py-3">
+                    <h5 class="card-title mb-0 text-dark-emphasis text-center fw-bold">
+                        Registrar Equipo / Computador
+                    </h5>
+                </div>
+                
+                <div class="card-body p-4">
+                    <form action="{{route('computer.store')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
 
-    @csrf
+                        <div class="mb-4">
+                            <label for="number" class="form-label fw-semibold text-secondary">Número de Inventario / Ficha</label>
+                            <input type="number" 
+                                   class="form-control form-control-lg" 
+                                   id="number" 
+                                   name="number" 
+                                   placeholder="Ej. 102"
+                                   required>
+                        </div>
 
-    <label>
-        Número:
-        <input type="number" name="number">
-    </label>
-    <br><br>
-    <label>
-        Marca:
-        <input type="text" name="brand">
-    </label>
-    <br><br>
+                        <div class="mb-4">
+                            <label for="brand" class="form-label fw-semibold text-secondary">Marca del Equipo</label>
+                            <input type="text" 
+                                   class="form-control form-control-lg" 
+                                   id="brand" 
+                                   name="brand" 
+                                   placeholder="Ej. Lenovo, Dell, HP"
+                                   required>
+                        </div>
 
-    <button type="submit">Enviar Formulario</button>
-    </form>
-</body>
-</html>
+                        <div class="d-grid gap-2 mt-5">
+                            <button class="btn btn-primary btn-lg shadow-sm" type="submit">
+                                Enviar formulario
+                            </button>
+                            <a href="/computer/create" class="btn btn-link btn-sm text-secondary text-decoration-none text-center">
+                                Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@endsection
