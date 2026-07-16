@@ -18,7 +18,7 @@
                     <th>Id</th>
                     <th>Numero</th>
                     <th>Marca</th>
-                    <th class="text-center" colspan="2">Acciones</th>
+                    <th class="text-center" style="width: 197px; min-width: 197px; max-width: 197px;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,14 +28,29 @@
                         <td>{{ sprintf('%03d', $computer->number) }}</td>
                         <td>{{ $computer->brand }}</td>
                         <td class="text-center">
-                            <a href="{{ route('computer.show', $computer->id) }}" class="btn btn-sm btn-outline-success px-3">
-                                Mostrar
-                            </a>
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ route('computer.edit', $computer->id) }}" class="btn btn-sm btn-outline-primary px-3">
-                                Editar
-                            </a>
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <a href="{{ route('computer.show', $computer->id) }}"
+                                    class="btn btn-sm btn-outline-success d-inline-flex align-items-center justify-content-center"
+                                    style="width: 40px; height: 30px;">
+                                    <i class="bi bi-eye" style="font-size: 20px"></i>
+                                </a>
+                                <a href="{{ route('computer.edit', $computer->id) }}"
+                                    class="btn btn-sm btn-outline-primary d-inline-flex align-items-center justify-content-center"
+                                    style="width: 40px; height: 30px;">
+                                    <i class="bi bi-pencil" style="font-size: 18px"></i>
+                                </a>
+                                <form action="{{ route('computer.destroy', $computer->id) }}" method="POST"
+                                    onsubmit="return confirm('¿Estás seguro de que deseas eliminar este computador?')"
+                                    class="m-0">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="btn btn-sm btn-outline-danger d-inline-flex align-items-center justify-content-center"
+                                        style="width: 40px; height: 30px;">
+                                        <i class="bi bi-trash3" style="font-size: 18px"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

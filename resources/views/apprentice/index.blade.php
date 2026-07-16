@@ -23,7 +23,7 @@
                         <th>Número de teléfono</th>
                         <th>Id curso</th>
                         <th>Id computador</th>
-                        <th class="text-center" colspan="3" width="150">Acciones</th>
+                        <th class="text-center" style="width: 197px; min-width: 197px; max-width: 197px;">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,22 +37,16 @@
                             <td>{{ $apprentice->computer->brand }}</td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center align-items-center gap-2">
-
-                                    <!-- Botón Ver -->
                                     <a href="{{ route('apprentice.show', $apprentice->id) }}"
                                         class="btn btn-sm btn-outline-success d-inline-flex align-items-center justify-content-center"
-                                        style="width: 40px; height: 35px;">
-                                        <i class="bi bi-eye" style="font-size: 18px"></i>
+                                        style="width: 40px; height: 30px;">
+                                        <i class="bi bi-eye" style="font-size: 20px"></i>
                                     </a>
-
-                                    <!-- Botón Editar -->
                                     <a href="{{ route('apprentice.edit', $apprentice->id) }}"
                                         class="btn btn-sm btn-outline-primary d-inline-flex align-items-center justify-content-center"
-                                        style="width: 40px; height: 35px;">
+                                        style="width: 40px; height: 30px;">
                                         <i class="bi bi-pencil" style="font-size: 18px"></i>
                                     </a>
-
-                                    <!-- Botón Eliminar (Formulario) -->
                                     <form action="{{ route('apprentice.destroy', $apprentice->id) }}" method="POST"
                                         onsubmit="return confirm('¿Estás seguro de que deseas eliminar este aprendiz?')"
                                         class="m-0">
@@ -60,11 +54,10 @@
                                         @method('DELETE')
                                         <button type="submit"
                                             class="btn btn-sm btn-outline-danger d-inline-flex align-items-center justify-content-center"
-                                            style="width: 40px; height: 35px;">
+                                            style="width: 40px; height: 30px;">
                                             <i class="bi bi-trash3" style="font-size: 18px"></i>
                                         </button>
                                     </form>
-
                                 </div>
                             </td>
                         </tr>

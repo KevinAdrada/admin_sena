@@ -14,17 +14,16 @@
                     <div class="card-body p-4">
                         <form action="{{ route('training_center.update', $training_center->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('PUT')
 
                             <div class="mb-4">
-                                <label for="name" class="form-label fw-semibold text-secondary">Nombre del
-                                    Centro</label>
+                                <label for="name" class="form-label fw-semibold text-secondary">Nombre del Centro</label>
                                 <input type="text" class="form-control form-control-lg" id="name" name="name"
                                     placeholder="Ej. Centro de Comercio y Servicios" required value="{{ old('name', $training_center->name) }}">
                             </div>
 
                             <div class="mb-4">
-                                <label for="location" class="form-label fw-semibold text-secondary">Ubicación /
-                                    Dirección</label>
+                                <label for="location" class="form-label fw-semibold text-secondary">Ubicación / Dirección</label>
                                 <input type="text" class="form-control form-control-lg" id="location" name="location"
                                     placeholder="Ej. Calle 4 # 2-100" required value="{{ old('location', $training_center->location) }}">
                             </div>

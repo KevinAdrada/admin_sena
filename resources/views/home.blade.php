@@ -128,7 +128,6 @@
         .tracking-widest {
             letter-spacing: 2px;
         }
-        /* Ajustar los textos centrados del carrusel */
         .carousel-caption {
             padding-bottom: 0;
         }

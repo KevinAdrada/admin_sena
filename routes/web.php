@@ -46,7 +46,7 @@ Route::get('course/{course}',[CourseController::class,'show'])->name('course.sho
 Route::post('course/store',[CourseController::class,'store'])->name('course.store');
 Route::get('course/{course}/edit',[CourseController::class,'edit'])->name('course.edit');
 Route::put('course/{course}',[CourseController::class,'update'])->name('course.update');
-// Route::delete('course/{course}',[CourseController::class,'destroy'])->name('
+Route::delete('course/{course}',[CourseController::class,'destroy'])->name('course.destroy');
 
 
 Route::get('teacher/list',[TeacherController::class,'index'])->name('teacher.index');
@@ -55,7 +55,7 @@ Route::get('teacher/{teacher}',[TeacherController::class,'show'])->name('teacher
 Route::post('teacher/store',[TeacherController::class,'store'])->name('teacher.store');
 Route::get('teacher/{teacher}/edit',[TeacherController::class,'edit'])->name('teacher.edit');
 Route::put('teacher/{teacher}',[TeacherController::class,'update'])->name('teacher.update');
-// Route::delete('teacher/{teacher}',[TeacherController::class,'destroy'])->name('teacher.destroy');
+Route::delete('teacher/{teacher}',[TeacherController::class,'destroy'])->name('teacher.destroy');
 
 
 Route::get('training_center/list',[TrainingCenterController::class,'index'])->name('training_center.index');
@@ -64,7 +64,7 @@ Route::get('training_center/{training_center}',[TrainingCenterController::class,
 Route::post('training_center/store',[TrainingCenterController::class,'store'])->name('training_center.store');
 Route::get('training_center/{training_center}/edit',[TrainingCenterController::class,'edit'])->name('training_center.edit');
 Route::put('training_center/{training_center}',[TrainingCenterController::class,'update'])->name('training_center.update');
-// Route::delete('training_center/{training_center}',[TrainingCenterController::class,'destroy'])->name('training_center.destroy');
+Route::delete('training_center/{training_center}',[TrainingCenterController::class,'destroy'])->name('training_center.destroy');
 
 
 

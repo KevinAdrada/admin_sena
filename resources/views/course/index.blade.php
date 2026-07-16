@@ -20,7 +20,7 @@
                     <th>Día</th>
                     <th>Área</th>
                     <th>Centro de Formación</th>
-                    <th class="text-center" colspan="2">Acciones</th>
+                    <th class="text-center" style="width: 197px; min-width: 197px; max-width: 197px;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,15 +32,30 @@
                         <td>{{$course->area->name }}</td>
                         <td>{{$course->training_center->name }}</td>
                         <td class="text-center">
-                            <a href="{{ route('course.show', $course->id) }}" class="btn btn-sm btn-outline-success px-3">
-                                Mostrar
-                            </a>
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ route('course.edit', $course->id) }}" class="btn btn-sm btn-outline-primary px-3">
-                                Editar
-                            </a>
-                        </td>
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <a href="{{ route('course.show', $course->id) }}"
+                                        class="btn btn-sm btn-outline-success d-inline-flex align-items-center justify-content-center"
+                                        style="width: 40px; height: 30px;">
+                                        <i class="bi bi-eye" style="font-size: 20px"></i>
+                                    </a>
+                                    <a href="{{ route('course.edit', $course->id) }}"
+                                        class="btn btn-sm btn-outline-primary d-inline-flex align-items-center justify-content-center"
+                                        style="width: 40px; height: 30px;">
+                                        <i class="bi bi-pencil" style="font-size: 18px"></i>
+                                    </a>
+                                    <form action="{{ route('course.destroy', $course->id) }}" method="POST"
+                                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar este curso?')"
+                                        class="m-0">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="btn btn-sm btn-outline-danger d-inline-flex align-items-center justify-content-center"
+                                            style="width: 40px; height: 30px;">
+                                            <i class="bi bi-trash3" style="font-size: 18px"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                     </tr>
                 @endforeach
             </tbody>

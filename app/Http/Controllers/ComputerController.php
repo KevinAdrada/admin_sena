@@ -33,4 +33,9 @@ class ComputerController extends Controller
         $computer->update($request->all());
         return redirect()->route('computer.index');
     }
+
+    public function destroy(Computer $computer){
+        $computer->delete();
+        return redirect()->route('computer.index');
+    }
 }

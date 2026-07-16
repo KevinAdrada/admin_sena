@@ -18,7 +18,7 @@
                     <th>Id</th>
                     <th>Nombre</th>
                     <th>Ubicación</th>
-                    <th class="text-center" colspan="2">Acciones</th>
+                    <th class="text-center" style="width: 197px; min-width: 197px; max-width: 197px;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,15 +28,30 @@
                         <td>{{ $training_center->name }}</td>
                         <td>{{ $training_center->location }}</td>
                         <td class="text-center">
-                            <a href="{{ route('training_center.show', $training_center->id) }}" class="btn btn-sm btn-outline-success px-3">
-                                Mostrar
-                            </a>
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ route('training_center.edit', $training_center->id) }}" class="btn btn-sm btn-outline-primary px-3">
-                                Editar
-                            </a>
-                        </td>
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <a href="{{ route('training_center.show', $training_center->id) }}"
+                                        class="btn btn-sm btn-outline-success d-inline-flex align-items-center justify-content-center"
+                                        style="width: 40px; height: 30px;">
+                                        <i class="bi bi-eye" style="font-size: 20px"></i>
+                                    </a>
+                                    <a href="{{ route('training_center.edit', $training_center->id) }}"
+                                        class="btn btn-sm btn-outline-primary d-inline-flex align-items-center justify-content-center"
+                                        style="width: 40px; height: 30px;">
+                                        <i class="bi bi-pencil" style="font-size: 18px"></i>
+                                    </a>
+                                    <form action="{{ route('training_center.destroy', $training_center->id) }}" method="POST"
+                                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar este centro de formación?')"
+                                        class="m-0">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="btn btn-sm btn-outline-danger d-inline-flex align-items-center justify-content-center"
+                                            style="width: 40px; height: 30px;">
+                                            <i class="bi bi-trash3" style="font-size: 18px"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                     </tr>
                 @endforeach
             </tbody>
