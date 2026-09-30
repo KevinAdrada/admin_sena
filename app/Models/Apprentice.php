@@ -7,23 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Apprentice extends Model
 {
-    protected $fillable = [
-        'name',
-        'email',
-        'cell_number',
-        'course_id',
-        'computer_id'
-    ];
-
-
     use HasFactory;
 
-    public function computer(){
-        return $this->belongsTo('App\Models\Computer');
-    }
-    
-    public function course(){
-        return $this->belongsTo('App\Models\Course');
+    protected $fillable = [
+        'estado',
+        'etapa',
+        'course_id',
+        'user_id',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

@@ -6,40 +6,35 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('apprentices', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); 
-            $table->string('email'); 
-            $table->unsignedinteger('cell_number'); 
             
-            //laves foraneas
+            $table->enum('estado', ['en formacion', 'desercion', 'retiro voluntario'])
+                  ->default('en formacion');
+
+            $table->enum('etapa', ['lectiva', 'practica'])->nullable();
+
+            // Llaves foráneas
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')
                 ->references('id') 
                 ->on('courses') 
                 ->onDelete('cascade') 
-                ->onUpdate('cascade') 
-            ;
+                ->onUpdate('cascade');
 
-            $table->unsignedBigInteger('computer_id');
-            $table->foreign('computer_id')
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
                 ->references('id') 
-                ->on('computers') 
+                ->on('users') 
                 ->onDelete('cascade') 
-                ->onUpdate('cascade') 
-            ;
+                ->onUpdate('cascade');
+                
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('apprentices');

@@ -15,12 +15,23 @@ class Training_center extends Model
 
 
     use HasFactory;
-    public function courses(){
-        return $this->hasMany('App\Models\Course');
+
+    public function environments()
+    {
+        return $this->hasMany(Environment::class);
+    }
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
     }
 
-    public function teachers(){
-        return $this->hasMany('App\Models\Teacher');
+    public function teachers()
+    {
+        return $this->hasMany(Teacher::class);
     }
 
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

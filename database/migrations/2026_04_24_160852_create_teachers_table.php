@@ -13,24 +13,17 @@ return new class extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); 
-            $table->string('email');
+
+            $table->string('tipo_cargo')->nullable();
+            $table->string('tipo_cuentadante')->nullable();
 
             //laves foraneas
-            $table->unsignedBigInteger('area_id');
-            $table->foreign('area_id')
-                ->references('id') 
-                ->on('areas') 
-                ->onDelete('cascade') 
-                ->onUpdate('cascade') 
-            ;
-
-            $table->unsignedBigInteger('training_center_id');
-            $table->foreign('training_center_id')
-                ->references('id') 
-                ->on('training_centers') 
-                ->onDelete('cascade') 
-                ->onUpdate('cascade') 
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade')
             ;
 
             $table->timestamps();

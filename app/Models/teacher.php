@@ -4,28 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Teacher extends Model
 {
+    use HasFactory;
 
     protected $fillable = [
-        'name',
-        'email',
-        'area_id',
-        'training_center_id'
+        'tipo_cargo',
+        'tipo_cuentadante',
+        'user_id',
     ];
 
-
-    use HasFactory;
-    public function training_center(){
-        return $this->belongsTo('App\Models\Training_center');
+    public function user(){
+        return $this->belongsTo(User::class);
     }
-
-    public function area(){
-        return $this->belongsTo('App\Models\Area');
-    }
-
-    public function courses(){
-        return $this->belongsToMany('App\Models\Course');
+    public function images(){
+        return $this->morphMany(Image::class, 'imageable');
     }
 }

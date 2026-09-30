@@ -1,79 +1,126 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mt-5">
-
-        <div class="mx-auto mb-3 d-inline-block p-2 text-center" style="background-color: #00b646; border-radius: 2rem;">
-            <a href="{{ url()->previous() }}"
-                class="btn btn-link text-decoration-none p-0 text-white fw-semibold d-inline-flex align-items-center">
-                <i class="bi bi-arrow-left fs-5"></i>
-            </a>
-        </div>
-
-        <div class="card shadow border-0 overflow-hidden mx-auto" style="max-width: 800px;">
-
-            <div class="card-header bg-gradient text-white p-4" style="background-color: #00b646;">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <span class="badge bg-white text-uppercase mb-2 fw-bold" style="color: #00b646;">Ficha de
-                            Registro</span>
-                        <h2 class="mb-0 fw-light">
-                            <strong>{{ $course['course_number'] }}</strong>
-                        </h2>
-                    </div>
-                    <span class="text-white fs-5">ID: #{{ $course['id'] }}</span>
-                </div>
-            </div>
-
-            <div class="card-body p-4 bg-light">
-
-                <div class="row g-4">
-
-                    <div class="col-md-6">
-                        <div class="bg-white p-4 rounded shadow-sm h-100">
-                            <h5 class="text-secondary border-bottom pb-2 mb-3">Datos del Curso</h5>
-                            <div class="mb-2">
-                                <small class="text-muted d-block text-uppercase fw-bold text-xs">Día</small>
-                                <span class="text-success fs-5 fw-bold">
-                                    <i class="bi bi-calendar me-1"></i> {{ $course['day'] }}
-                                </span>
+    <div class="container" style="margin-top: 30px;">
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header text-white p-4 shadow-sm"
+                        style="background: linear-gradient(135deg, #2ecc71 0%, #00b646 100%); border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem;">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-white text-success rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="bi bi-book-half fs-3"></i>
+                                </div>
+                                <div>
+                                    <span class="badge bg-white text-success text-uppercase mb-1 fw-bold small" style="border-radius: 1rem; padding: 0.25rem 0.6rem;">Ficha de Registro</span>
+                                    <h3 class="mb-0 fw-bold">Detalles del Curso</h3>
+                                </div>
                             </div>
+                            <a href="{{ route('course.index') }}"
+                                class="btn btn-outline-light btn-sm fw-bold d-inline-flex align-items-center px-3 py-1 shadow-sm"
+                                style="border-width: 2px; border-radius: 1rem;">
+                                <i class="bi bi-arrow-left me-1"></i> Volver
+                            </a>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                    <div class="bg-white p-4 rounded shadow-sm h-100 d-flex flex-column justify-content-between">
-                        <div>
-                            <h5 class="text-secondary border-bottom pb-2 mb-3">Asignaciones</h5>
 
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <span class="text-muted fw-medium">Área:</span>
-                                <span class="badge bg-secondary px-3 py-2 fs-6">{{ $course->area->name }}</span>
-                            </div>
+                    <div class="card-body p-4 bg-light">
+                        <div class="card border-0 shadow-sm p-4 mb-4">
+                            <h5 class="text-success fw-bold mb-3 border-bottom pb-2">
+                                <i class="bi bi-info-circle-fill me-2"></i> Información General del Curso
+                            </h5>
 
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="text-muted fw-medium">Centro de Formación:</span>
-                                <span class="badge bg-dark px-3 py-2 fs-6">{{ $course->training_center->name }}</span>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="p-3 bg-light rounded border-start border-success border-4 h-100">
+                                        <span class="text-muted d-block text-uppercase fw-bold small mb-1">Nombre del Curso</span>
+                                        <span class="text-dark fs-6 fw-semibold">{{ $course->course_name }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="p-3 bg-light rounded border-start border-success border-4 h-100">
+                                        <span class="text-muted d-block text-uppercase fw-bold small mb-1">Número del Curso</span>
+                                        <span class="text-dark fs-6 fw-semibold">{{ $course->course_number }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="p-3 bg-light rounded border-start border-success border-4 h-100">
+                                        <span class="text-muted d-block text-uppercase fw-bold small mb-2">Tipo de Programa</span>
+                                        <div>
+                                            <span class="badge bg-{{ $course->program_type == 'tecnologo' ? 'primary' : 'info' }} bg-opacity-10 text-{{ $course->program_type == 'tecnologo' ? 'primary' : 'dark' }} border border-{{ $course->program_type == 'tecnologo' ? 'primary' : 'info' }} text-uppercase px-3 py-2 fw-semibold">
+                                                <i class="bi bi-mortarboard me-1"></i> {{ $course->program_type }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="p-3 bg-light rounded border-start border-success border-4 h-100">
+                                        <span class="text-muted d-block text-uppercase fw-bold small mb-2">Ambiente Asignado</span>
+                                        <div>
+                                            @if($course->environment)
+                                                <span class="text-dark fw-semibold fs-6">
+                                                    <i class="bi bi-door-open me-1 text-success"></i> {{ $course->environment->name }} 
+                                                    <span class="text-muted small">({{ $course->environment->location }})</span>
+                                                </span>
+                                            @else
+                                                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger px-3 py-2 fw-semibold">
+                                                    <i class="bi bi-exclamation-circle me-1"></i> Sin ambiente asignado
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="p-3 bg-light rounded border-start border-success border-4 h-100">
+                                        <span class="text-muted d-block text-uppercase fw-bold small mb-1">Fecha de Inicio</span>
+                                        <span class="text-dark fs-6 fw-semibold"><i class="bi bi-calendar-event me-1 text-success"></i> {{ $course->start_date }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="p-3 bg-light rounded border-start border-success border-4 h-100">
+                                        <span class="text-muted d-block text-uppercase fw-bold small mb-1">Fecha de Fin</span>
+                                        <span class="text-dark fs-6 fw-semibold"><i class="bi bi-calendar-check me-1 text-success"></i> {{ $course->end_date }}</span>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+
+                        <div class="card border-0 shadow-sm p-4 mb-4">
+                            <h5 class="text-success fw-bold mb-3 border-bottom pb-2 d-flex align-items-center justify-content-between">
+                                <span><i class="bi bi-diagram-3-fill me-2"></i> Áreas Asociadas</span>
+                                <span class="badge bg-success rounded-pill px-3 py-2 fs-6">{{ $course->areas?->count() ?? 0 }}</span>
+                            </h5>
+
+                            <div class="p-3 bg-light rounded border-start border-success border-4">
+                                @forelse($course->areas as $area)
+                                    <span class="badge bg-success bg-opacity-10 text-success border border-success me-1 mb-2 px-3 py-2 fw-semibold fs-6">
+                                        <i class="bi bi-check2 me-1"></i> {{ $area->name }}
+                                    </span>
+                                @empty
+                                    <div class="text-center py-3 text-muted">
+                                        <i class="bi bi-inbox fs-3 d-block mb-1 text-black-50"></i>
+                                        <span class="fst-italic">Este curso no tiene áreas asociadas.</span>
+                                    </div>
+                                @endforelse
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 pt-3 border-top">
+                            
+                                <div><i class="bi bi-calendar-plus me-1 text-success"></i><strong>Creado:</strong> {{ isset($course->created_at) ? \Carbon\Carbon::parse($course->created_at)->format('d/m/Y H:i') : 'N/A' }}</div>
+                                <div><i class="bi bi-arrow-clockwise me-1 text-success"></i><strong>Actualizado:</strong> {{ isset($course->updated_at) ? \Carbon\Carbon::parse($course->updated_at)->format('d/m/Y H:i') : 'N/A' }}</div>
+                            
                         </div>
                     </div>
                 </div>
-                </div>
             </div>
-
-            <div class="card-footer bg-white border-0 px-4 py-3 border-top text-muted fs-7">
-                <div class="row text-center text-md-start">
-                    <div class="col-md-6 mb-2 mb-md-0">
-                        <i class="bi bi-calendar-plus me-1"></i>
-                        <strong>Creado el:</strong> {{ \Carbon\Carbon::parse($course['created_at'])->format('d/m/Y H:i') }}
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <i class="bi bi-arrow-clockwise me-1"></i>
-                        <strong>Última actualización:</strong>
-                        {{ \Carbon\Carbon::parse($course['updated_at'])->format('d/m/Y H:i') }}
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 @endsection

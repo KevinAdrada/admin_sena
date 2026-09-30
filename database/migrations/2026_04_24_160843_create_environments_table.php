@@ -6,25 +6,13 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('courses', function (Blueprint $table) {
+        Schema::create('environments', function (Blueprint $table) {
             $table->id();
-            $table->integer('course_number'); 
-            $table->date('day');
-
-            //laves foraneas
-            $table->unsignedBigInteger('area_id');
-            $table->foreign('area_id')
-                ->references('id') 
-                ->on('areas') 
-                ->onDelete('cascade') 
-                ->onUpdate('cascade') 
-            ;
-
+            $table->string('name');
+            $table->string('location')->nullable();
+            
             $table->unsignedBigInteger('training_center_id');
             $table->foreign('training_center_id')
                 ->references('id') 
@@ -32,17 +20,12 @@ return new class extends Migration
                 ->onDelete('cascade') 
                 ->onUpdate('cascade') 
             ;
-
-
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('courses');
+        Schema::dropIfExists('environments');
     }
 };

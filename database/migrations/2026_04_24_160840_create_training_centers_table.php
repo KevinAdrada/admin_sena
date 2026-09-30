@@ -6,22 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('training_centers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('location');
+
+            $table->unsignedBigInteger('image_id')->nullable();
+            $table->foreign('image_id')
+                ->references('id')
+                ->on('images')
+                ->onDelete('set null')
+                ->onUpdate('cascade');
+            
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('training_centers');

@@ -1,80 +1,112 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mt-5">
-
-        <div class="mx-auto mb-3 d-inline-block p-2 text-center" style="background-color: #00b646; border-radius: 2rem;">
-            <a href="{{ url()->previous() }}"
-                class="btn btn-link text-decoration-none p-0 text-white fw-semibold d-inline-flex align-items-center">
-                <i class="bi bi-arrow-left fs-5"></i>
-            </a>
-        </div>
-
-        <div class="card shadow border-0 overflow-hidden mx-auto" style="max-width: 800px;">
-
-            <div class="card-header bg-gradient text-white p-4" style="background-color: #00b646;">
-                <div class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <span class="badge bg-white text-uppercase mb-2 fw-bold" style="color: #00b646;">Ficha de Registro</span>
-                        <h2 class="mb-0 fw-light">
-                            <strong>{{ $teacher['name'] }}</strong>
-                        </h2>
-                    </div>
-                    <span class="text-white fs-5">ID: #{{ $teacher['id'] }}</span>
-                </div>
-            </div>
-
-            <div class="card-body p-4 bg-light">
-
-                <div class="row g-4">
-
-                    <div class="col-md-6">
-                        <div class="bg-white p-4 rounded shadow-sm h-100">
-                            <h5 class="text-secondary border-bottom pb-2 mb-3">Datos de Contacto</h5>
-
-                            <div class="mb-3">
-                                <small class="text-muted d-block text-uppercase fw-bold text-xs">Correo Electrónico</small>
-                                <span class="text-dark fs-5 fw-semibold">{{ $teacher['email'] }}</span>
+    <div class="container" style="margin-top: 30px;">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm border-0">
+                    <!-- Encabezado con Degradado y Botón Volver -->
+                    <div class="card-header text-white p-4 shadow-sm"
+                        style="background: linear-gradient(135deg, #2ecc71 0%, #00b646 100%); border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem;">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="bg-white text-success rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                    style="width: 50px; height: 50px;">
+                                    <i class="bi bi-person-badge-fill fs-3"></i>
+                                </div>
+                                <div>
+                                    <span class="badge bg-white text-success text-uppercase mb-1 fw-bold small"
+                                        style="border-radius: 1rem; padding: 0.25rem 0.6rem;">Ficha de Registro</span>
+                                    <h3 class="mb-0 fw-bold">Detalles del Instructor</h3>
+                                </div>
                             </div>
+                            <a href="{{ route('teacher.index') }}"
+                                class="btn btn-outline-light btn-sm fw-bold d-inline-flex align-items-center px-3 py-1 shadow-sm"
+                                style="border-width: 2px; border-radius: 1rem;">
+                                <i class="bi bi-arrow-left me-1"></i> Volver
+                            </a>
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="bg-white p-4 rounded shadow-sm h-100 d-flex flex-column justify-content-between">
-                            <div>
-                                <h5 class="text-secondary border-bottom pb-2 mb-3">Asignaciones</h5>
+                    <div class="card-body p-4 bg-light">
+                        <!-- Perfil / Avatar del Instructor -->
+                        <div class="row align-items-center mb-4 text-center">
+                            <div class="col-md-12">
+                                @php
+                                    $imageModel = $teacher->images->first();
+                                    $avatar = $imageModel
+                                        ? asset('storage/images/' . $imageModel->imagen)
+                                        : asset('images/default-user.png');
+                                @endphp
+                                <img src="{{ $avatar }}" alt="Foto de perfil"
+                                    class="rounded-circle shadow-sm border border-3 border-white mb-3 object-fit-cover"
+                                    style="width: 110px; height: 110px;">
+                                <h4 class="fw-bold text-dark mb-1">{{ $teacher->user->name ?? 'Sin nombre' }}</h4>
+                                <span class="text-muted small"><i
+                                        class="bi bi-envelope me-1"></i>{{ $teacher->user->email ?? 'Sin correo' }}</span>
+                            </div>
+                        </div>
 
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <span class="text-muted fw-medium">ID Área:</span>
-                                    <span class="badge bg-secondary px-3 py-2 fs-6">{{ $teacher->area->name }}</span>
+                        <!-- Tarjeta de Información General -->
+                        <div class="card border-0 shadow-sm p-4 mb-4">
+                            <h5 class="text-success fw-bold mb-3 border-bottom pb-2">
+                                <i class="bi bi-info-circle-fill me-2"></i> Información General
+                            </h5>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="p-3 bg-light rounded border-start border-success border-4 h-100">
+                                        <span class="text-muted d-block text-uppercase fw-bold small mb-1">Documento de
+                                            Identidad</span>
+                                        <span
+                                            class="text-dark fs-6 fw-semibold">{{ $teacher->user->documento ?? 'No registrado' }}</span>
+                                    </div>
                                 </div>
 
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <span class="text-muted fw-medium">ID Centro de Formación:</span>
-                                    <span class="badge bg-dark px-3 py-2 fs-6">{{ $teacher->training_center->name }}</span>
+                                <div class="col-md-6">
+                                    <div class="p-3 bg-light rounded border-start border-success border-4 h-100">
+                                        <span class="text-muted d-block text-uppercase fw-bold small mb-1">Celular /
+                                            Teléfono</span>
+                                        <span
+                                            class="text-dark fs-6 fw-semibold">{{ $teacher->user->celular ?? 'No registrado' }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="p-3 bg-light rounded border-start border-success border-4">
+                                        <span class="text-muted d-block text-uppercase fw-bold small mb-2">Tipo de
+                                            Cargo</span>
+                                        <div>
+                                            @if ($teacher->tipo_cargo === 'cuentadante')
+                                                <span
+                                                    class="badge bg-success bg-opacity-10 text-success border border-success px-3 py-2 fw-semibold">
+                                                    <i class="bi bi-shield-check me-1"></i> Cuentadante
+                                                    ({{ ucfirst($teacher->tipo_cuentadante) }})
+                                                </span>
+                                            @else
+                                                <span
+                                                    class="badge bg-secondary bg-opacity-10 text-secondary border px-3 py-2 fw-semibold">
+                                                    <i class="bi bi-person me-1"></i> Instructor Estándar
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                </div>
-            </div>
+                        <div
+                            class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 pt-3 border-top">
 
-            <div class="card-footer bg-white border-0 px-4 py-3 border-top text-muted fs-7">
-                <div class="row text-center text-md-start">
-                    <div class="col-md-6 mb-2 mb-md-0">
-                        <i class="bi bi-calendar-plus me-1"></i>
-                        <strong>Creado el:</strong>
-                        {{ \Carbon\Carbon::parse($teacher['created_at'])->format('d/m/Y H:i') }}
-                    </div>
-                    <div class="col-md-6 text-md-end">
-                        <i class="bi bi-arrow-clockwise me-1"></i>
-                        <strong>Última actualización:</strong>
-                        {{ \Carbon\Carbon::parse($teacher['updated_at'])->format('d/m/Y H:i') }}
+                            <div><i class="bi bi-calendar-plus me-1 text-success"></i><strong>Creado:</strong>
+                                {{ \Carbon\Carbon::parse($teacher->created_at)->format('d/m/Y H:i') }}</div>
+                            <div><i class="bi bi-arrow-clockwise me-1 text-success"></i><strong>Actualizado:</strong>
+                                {{ \Carbon\Carbon::parse($teacher->updated_at)->format('d/m/Y H:i') }}</div>
+
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 @endsection

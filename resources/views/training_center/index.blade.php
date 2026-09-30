@@ -1,62 +1,110 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container my-5">
+    <div class="container" style="margin-top: 30px;">
+        <div class="card shadow-sm border-0">
+            <div class="card-header text-white p-4 shadow-sm"
+                 style="background: linear-gradient(135deg, #2ecc71 0%, #00b646 100%);">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h3 class="mb-0 fw-bold">Centros de Formación</h3>
+                        <p class="mb-0 text-white-50 small">Gestión y control de centros de formación</p>
+                    </div>
+                    <a href="{{ route('training_center.create') }}"
+                        class="btn btn-outline-light btn-sm fw-bold d-inline-flex align-items-center px-3 py-1 shadow-sm"
+                        style="border-width: 2px; border-radius: 1rem;">
+                        <i class="bi bi-plus-circle me-1"></i> Nuevo Centro de Formación
+                    </a>
+                </div>
+            </div>
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="mb-0 text-dark fw-bold text-uppercase fs-3">Listar Centros de Formación</h1>
-        
-        <a href="{{ route('training_center.create') }}" class="btn fw-semibold text-white px-3 py-2 d-inline-flex align-items-center shadow-sm" style="background-color: #00b646; border-radius: 0.5rem;">
-            <i class="bi bi-plus-circle me-2 fs-5"></i> Crear Centro de Formación
-        </a>
+            <div class="card-body p-4 bg-light">
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+                        <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                <div class="table-responsive bg-white rounded-3 shadow-sm p-3">
+                    <table class="table table-hover align-middle mb-0" style="width:100%">
+                        <thead class="table-light text-center">
+                            <tr>
+                                <th>ID</th>
+                                <th style="width: 80px;">Imagen</th>
+                                <th class="text-start">Nombre</th>
+                                <th class="text-start">Ubicación</th>
+                                <th class="text-center" style="width: 197px; min-width: 197px; max-width: 197px;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($training_centers as $training_center)
+                                <tr class="text-center">
+                                    <td>{{ $training_center->id }}</td>
+                                    <td>
+                                        @php
+                                            $imageModel = $training_center->images->first();
+                                            $avatar = $imageModel
+                                                ? asset('storage/images/' . $imageModel->imagen)
+                                                : asset('images/default-user.png');
+                                        @endphp
+                                        <img src="{{ $avatar }}" alt="Imagen de {{ $training_center->name }}"
+                                             class="rounded-circle shadow-sm"
+                                             style="width: 40px; height: 40px; object-fit: cover;">
+                                    </td>
+                                    <td class="fw-semibold text-start">{{ $training_center->name }}</td>
+                                    <td class="text-start">{{ $training_center->location ?? 'Sin ubicación' }}</td>
+                                    <td>
+                                        <div class="d-flex justify-content-center align-items-center gap-2">
+                                            <a href="{{ route('training_center.show', $training_center->id) }}"
+                                                class="btn btn-outline-success btn-icon" title="Ver">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                            <a href="{{ route('training_center.edit', $training_center->id) }}"
+                                                class="btn btn-outline-primary btn-icon" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <form action="{{ route('training_center.destroy', $training_center->id) }}"
+                                                method="POST"
+                                                onsubmit="return confirm('¿Estás seguro de que deseas eliminar este centro de formación?');"
+                                                class="m-0">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-outline-danger btn-icon" title="Eliminar">
+                                                    <i class="bi bi-trash3"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center py-4 text-muted">
+                                        <i class="bi bi-folder-x fs-2 d-block mb-2"></i>
+                                        No hay centros de formación registrados todavía.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="table-responsive shadow-sm rounded">
-        <table id="idApprentice" class="table table-striped table-bordered align-middle mb-0" style="width:100%">
-            <thead class="table-light">
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Ubicación</th>
-                    <th class="text-center" style="width: 197px; min-width: 197px; max-width: 197px;">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($training_centers as $training_center)
-                    <tr>
-                        <td>{{ $training_center->id }}</td>
-                        <td>{{ $training_center->name }}</td>
-                        <td>{{ $training_center->location }}</td>
-                        <td class="text-center">
-                                <div class="d-flex justify-content-center align-items-center gap-2">
-                                    <a href="{{ route('training_center.show', $training_center->id) }}"
-                                        class="btn btn-sm btn-outline-success d-inline-flex align-items-center justify-content-center"
-                                        style="width: 40px; height: 30px;">
-                                        <i class="bi bi-eye" style="font-size: 20px"></i>
-                                    </a>
-                                    <a href="{{ route('training_center.edit', $training_center->id) }}"
-                                        class="btn btn-sm btn-outline-primary d-inline-flex align-items-center justify-content-center"
-                                        style="width: 40px; height: 30px;">
-                                        <i class="bi bi-pencil" style="font-size: 18px"></i>
-                                    </a>
-                                    <form action="{{ route('training_center.destroy', $training_center->id) }}" method="POST"
-                                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar este centro de formación?')"
-                                        class="m-0">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="btn btn-sm btn-outline-danger d-inline-flex align-items-center justify-content-center"
-                                            style="width: 40px; height: 30px;">
-                                            <i class="bi bi-trash3" style="font-size: 18px"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+    <style>
+        .btn-icon {
+            width: 36px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            padding: 0;
+        }
 
-</div>
+        .btn-icon i {
+            font-size: 18px;
+        }
+    </style>
 @endsection
